@@ -6,29 +6,28 @@
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
 var merge = function (nums1, m, nums2, n) {
-    let ans = [];
-    nums1 = nums1.slice(0, m);
-    nums2 = nums2.slice(0);
-
-    nums1.forEach(item => {
-        let index = 0
-        while (index < n) {
-            if (item < nums2[index]) {
-                ans.push(item)
-                break
-            } else {
-                ans.push(nums2[index]);
-                nums2.splice(index, 1);
-                index++;
-            }
+    let ans = [],
+        insertIndex = 0;
+    while (insertIndex < nums1.length) {
+        let item = nums1[insertIndex];
+        while (item > nums2[0]) {
+            nums1.splice(insertIndex, 0, nums2[0])
+            nums2.splice(0, 1);
+            insertIndex++;
         }
-    })
-    return ans.concat(nums2);
+        insertIndex++;
+    }
+    let remain = nums2.length,
+        currNums1Len = m + n - remain;
+    nums1.splice(currNums1Len, n, ...nums2);
+    console.log(nums1);
 };
 
-var nums1 = [1, 2, 3, 4,0, 0, 0], m = 4,
-    nums2 = [2, 5, 6], n = 3;
+var nums1 = [1, 3, 7, 9, 10, 0, 0, 0, 0],
+    nums2 = [2, 5, 6 ,7],
+    n = nums2.length,
+    m = nums1.length - n;
 
 var ans = merge(nums1, m, nums2, n);
 
-console.log(ans);
+// console.log();
