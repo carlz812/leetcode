@@ -15,16 +15,10 @@ var isValid = function (s) {
     let front = [];
     arr.forEach(item => {
         var last = front.pop();
-        // console.log(item, couple[last])
-        if (item === couple[last]) {
-            console.log(item, couple[last])
-        } else {
-            console.log('push', last, item);
+        if (item !== couple[last]) {
             front.push(last, item);
         }
     })
-    console.log(front);
-    console.log(!front.pop());
     return !front.pop();
 };
 
