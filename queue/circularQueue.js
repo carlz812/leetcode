@@ -3,7 +3,7 @@
  * @param {number} k
  */
 var MyCircularQueue = function (k) {
-    this.size = k;
+    this.package = k;
     this.content = [];
 };
 
@@ -37,7 +37,7 @@ MyCircularQueue.prototype.deQueue = function () {
  * @return {number}
  */
 MyCircularQueue.prototype.Front = function () {
-    return this.content[0] || null;
+    return !this.isEmpty() ? this.content.slice()[0] : -1;
 };
 
 /**
@@ -45,7 +45,7 @@ MyCircularQueue.prototype.Front = function () {
  * @return {number}
  */
 MyCircularQueue.prototype.Rear = function () {
-    return !this.isEmpty() ? this.content.slice(-1)[0] : null;
+    return !this.isEmpty() ? this.content.slice(-1)[0] : -1;
 };
 
 /**
@@ -61,38 +61,5 @@ MyCircularQueue.prototype.isEmpty = function () {
  * @return {boolean}
  */
 MyCircularQueue.prototype.isFull = function () {
-    return this.content.length === this.size;
+    return this.content.length === this.package;
 };
-
-/**
- * Your MyCircularQueue object will be instantiated and called as such:
- * var obj = Object.create(MyCircularQueue).createNew(k)
- * var param_1 = obj.enQueue(value)
- * var param_2 = obj.deQueue()
- * var param_3 = obj.Front()
- * var param_4 = obj.Rear()
- * var param_5 = obj.isEmpty()
- * var param_6 = obj.isFull()
- */
-
-var circularQueue = new MyCircularQueue(3); // 设置长度为3
-
-var a = circularQueue.enQueue(1);  // 返回true
-console.log(a);
-
-var b = circularQueue.enQueue(2);  // 返回true
-console.log(b);
-var c = circularQueue.enQueue(3);  // 返回true
-console.log(c);
-var d = circularQueue.enQueue(4);  // 返回false,队列已满
-console.log(d);
-var e = circularQueue.Rear();  // 返回3
-console.log(e);
-var f = circularQueue.isFull();  // 返回true
-console.log(f);
-var g = circularQueue.deQueue();  // 返回true
-console.log(g);
-var h = circularQueue.enQueue(4);  // 返回true
-console.log(h);
-var i = circularQueue.Rear();  // 返回4
-console.log(i);
