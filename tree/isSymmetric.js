@@ -13,7 +13,6 @@ var isSymmetric = function (root) {
     if (!root) {
         return true
     }
-    ;
     return symmetric(root.left, root.right);
 };
 

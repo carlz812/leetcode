@@ -14,7 +14,6 @@ var generateTrees = function (n) {
         return new TreeNode(null);
     }
     return inner(1, n);
-
 };
 
 var inner = function (start, end) {
@@ -37,5 +36,4 @@ var inner = function (start, end) {
         });
     }
     return trees;
-
 };
