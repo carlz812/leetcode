@@ -12,26 +12,26 @@
  * @return {Node}
  */
 var flatten = function (head) {
-    var currentNode = head;
-    while (currentNode.next !== null) {
-        var child = currentNode.child;
-        if (child === null) {
-            currentNode = currentNode.next;
-        } else {
-            var next = currentNode.next;
-            var child = currentNode.child;
+    var curr = head,
+        tempNext = [];
 
-            next.prev = null;
-            currentNode.next = child;
-            child.prev = currentNode;
-
-            var children = flatten(child);
-
-            children.next = next;
-            next.prev = children;
-
-            currentNode = next;
+    if (curr === null) return null;
+    while (curr.next !== null || curr.child !== null || tempNext.length !== 0) {
+        if (curr.child !== null) {
+            var next = curr.next;
+            if (next !== null) {
+                tempNext.push(next);
+            }
+            curr.next = curr.child;
+            curr.child.prev = curr;
+            curr.child = null;
         }
+        if (curr.next === null && tempNext.length!==0) {
+            var last = tempNext.pop();
+            curr.next = last;
+            last.prev = curr;
+        }
+        curr = curr.next;
     }
-    return currentNode;
+    return head;
 };
