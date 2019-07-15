@@ -14,16 +14,30 @@ var copyRandomList = function(head) {
     if (!head)
         return null;
 
-    let hash = new Map();
-    let newArr = [];
-    let node = head;
+    var hashMap = {};
+    var newHead = new Node(head.val, null, null);
+    var lastNode = newHead;
 
+    var node = head.next;
+    hashMap[head.val] = newHead;
+    var newNode = null;
     while (node) {
-        hash.set(node, newArr.length);
-        newArr.push(new Node(node.label));
+        newNode = new Node(node.val, null, null);
+        hashMap[node.val] = newNode;
+        lastNode.next = newNode;
+        lastNode = newNode;
         node = node.next;
     }
 
+    var old = head;
+    while (old) {
+        newNode = hashMap[old.val];
+        var random = old.random;
+        if (random) {
+            newNode.random = hashMap[random.val];
+        }
+        old = old.next;
+    }
 
-
+    return newHead;
 };
