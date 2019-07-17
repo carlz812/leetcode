@@ -20,7 +20,6 @@ var merge = function (nums1, m, nums2, n) {
     let remain = nums2.length,
         currNums1Len = m + n - remain;
     nums1.splice(currNums1Len, n, ...nums2);
-    console.log(nums1);
 };
 
 var nums1 = [1, 3, 7, 9, 10, 0, 0, 0, 0],

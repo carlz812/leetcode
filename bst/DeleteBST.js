@@ -20,10 +20,8 @@ var deleteNode = function (root, key) {
             } else {
                 if (cur == root) {
                     root = root.left;
-                } else if (flag == 0) {
-                    prev.left = cur.left;
                 } else {
-                    prev.right = cur.left;
+                    prev[flag ? 'right' : 'left'] = cur.left;
                 }
             }
             break;
