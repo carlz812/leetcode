@@ -10,10 +10,7 @@
  * @return {number}
  */
 var maxDepth = function (root) {
-    var curr = root, count = 1;
-    if(curr===null){
-        return 0;
-    }
+    var curr = root, count = 0;
     var inner = function (root, level) {
         if (root === null) {
             return;
