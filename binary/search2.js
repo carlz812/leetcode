@@ -20,8 +20,8 @@ var search = function (nums, target) {
     return -1;
 };
 
-var nums = [-1, 0, 3, 5, 9, 12, 14, 15, 17, 24, 25, 26, 28, 29, 30, 31, 34, 35, 36],
-    target = 28;
+var nums = [1],
+    target = 1;
 
 // var nums = [-1, 0, 3, 5, 9, 12];
 // var target = 13;
