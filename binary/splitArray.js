@@ -1,41 +1,44 @@
-/* wrong version */
+/* best version */
 /**
  * @param {number[]} nums
  * @param {number} m
  * @return {number}
  */
 var splitArray = function (nums, m) {
-    var sum = nums.reduce((a, b) => a + b);
-    var max = Number.MIN_SAFE_INTEGER;
+    var l = 0;
+    var r = 0;
+    var n = nums.length;
 
-    var inner = function (s, m, sum, max) {
-        var start = s;
-        var lim = Math.floor(sum / m);
-        var tempSum = 0;
-        while (tempSum + nums[start] <= lim) {
-            tempSum += nums[start];
-            start++;
+    for (var i = 0; i < n; i++) {
+        r += nums[i];
+        if (l < nums[i]) {
+            l = nums[i];
         }
-        var nextSum = tempSum + nums[start];
-        if (m === 2) {
-            return Math.min(
-                Math.max(max, tempSum, sum - tempSum),
-                Math.max(max, nextSum, sum - nextSum));
+    }
+    var ans = r;
+    while (l <= r) {
+        var mid = (l + r) >> 1;
+        var sum = 0;
+        var cnt = 1;
+        for (var i = 0; i < n; i++) {
+            if (sum + nums[i] > mid) {
+                cnt++;
+                sum = nums[i];
+            } else {
+                sum += nums[i];
+            }
         }
-        return Math.min(
-            inner(start, m - 1, sum - tempSum, Math.max(max, tempSum)),
-            inner(
-                start + 1,
-                m - 1,
-                sum - nextSum,
-                Math.max(max, nextSum))
-        );
-    };
-
-    return inner(0, m, sum, max);
+        if (cnt <= m) {
+            ans = Math.min(ans, mid);
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+    return ans;
 };
 
-var nums = [7, 2, 5, 2, 8, 10, 9, 14, 6, 2, 10, 7],
-    m = 6;
+var nums = [3, 2, 3, 1, 2, 4, 5, 5, 6, 7, 7, 8, 2, 3, 1, 1, 1, 10, 11, 5, 6, 2, 4, 7, 8, 5, 6],
+    m = 20;
 
 console.log(splitArray(nums, m));
