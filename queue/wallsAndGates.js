@@ -11,16 +11,16 @@ var wallsAndGates = function (rooms) {
   if (m == 0) return;
   var n = rooms[0].length;
   var gStart = [];
-  rooms.forEach(row => {
-    row.forEach(col => {
+  rooms.forEach((row, r) => {
+    row.forEach((col, c) => {
       if (col === GATE) {
-        gStart.push([row, col]);
+        gStart.push([r, c]);
       }
     })
   })
 
   while (gStart.length) {
-    const [row, col] = gStart.splice(0, 1);
+    const [row, col] = gStart.splice(0, 1)[0];
     DIRECTIONS.forEach(dir => {
       var r = row + dir[0];
       var c = col + dir[1];
@@ -31,4 +31,13 @@ var wallsAndGates = function (rooms) {
       gStart.push([r, c]);
     })
   }
+  console.log(JSON.stringify(rooms));
 };
+
+
+var a = [
+  [2147483647,  0, 2147483647],
+  [2147483647, 2147483647, -1],
+  [0, -1, -1]
+];
+console.log(wallsAndGates(a))
