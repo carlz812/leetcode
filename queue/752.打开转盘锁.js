@@ -9,31 +9,41 @@
  * @return {number}
  */
 var openLock = function (deadends, target) {
-    if (deadends.indexOf('0000') !== -1) {
-        return -1
+    var Mapping = {};
+    deadends.forEach(key=>{
+        Mapping[key] = true;
+    })
+    var list = [];
+    if (target == null || target.length == 0 || Mapping['0000']) {
+        return -1;
     }
-    var q = [['0000', 0]]
 
-    while (q.length) {
-        const [node, step] = q.splice(0, 1)[0];
-        for (var i = 0; i < 4; i++) {
-            [1, -1].forEach(add => {
-                var cur = `${node[i]}${(Number(node[i]) + add) % 10}${node[i + 1]}`;
-                console.log(cur);
-                console.log('node', node);
-                if (cur == target) {
-                    return step + 1
-                }
-                if (deadends.indexOf(cur) !== -1) {
-                    q.push([cur, step + 1])
-                    deadends.push(cur)
-                }
-            })
+    list.push(["0000", 0]);
+    while (list.length) {
+        let [str, depth] = list.splice(0, 1)[0];
+        if (str == target) {
+            return depth;
+        }
+        if (!Mapping[str]) {
+            Mapping[str] = true;
+            list.push(...getNextList(str, depth));
         }
     }
-};
+    return -1;
+}
 
-var a = ["0201","0101","0102","1212","2002"],
-b = "0202"
 
-console.log(openLock(a,b));
+var getNextList = function (str, depth) {
+    var res = [];
+    var chars = `${str}`.split('');
+
+    for (var i = 0; i < chars.length; i++) {
+        var num = Number(chars[i]);
+        var newChars = chars.slice();
+        newChars[i] = `${(num + 11) % 10}`; 
+        res.push([`${newChars.join('')}`, depth + 1]);
+        newChars[i] = `${(num + 9) % 10}`;
+        res.push([`${newChars.join('')}`, depth + 1]);
+    }
+    return res;
+}
