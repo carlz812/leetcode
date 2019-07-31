@@ -36,10 +36,7 @@ MapSum.prototype.sum = function (prefix) {
     while (pre.length) {
         var curr = pre.shift();
         var key = this.getIndex(curr);
-
-        // if (root.val) {
-        //     sum += root.val;
-        // }
+        
         if (root.children[key]) {
             root = root.children[key];
         } else {
