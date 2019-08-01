@@ -16,6 +16,8 @@ var AutocompleteSystem = function (sentences, times) {
  */
 AutocompleteSystem.prototype.input = function (c) {
     if (c === '#') {
+        var w = this.collection.join('');
+        this.dictionary.insert(w)
         this.collection = [];
         return [];
     } else {
@@ -37,7 +39,7 @@ AutocompleteSystem.prototype.input = function (c) {
 * Initialize your data structure here.
 */
 var MapSum = function () {
-    this.root = new Node();
+    this.root = new Node(0);
 };
 
 /** 
@@ -57,7 +59,7 @@ MapSum.prototype.insert = function (word, val) {
         root = root.children[key];
     }
     root.isOver = true;
-    root.weight = val;
+    root.weight = val || (root.weight ? root.weight + 1 : 1);
     root.word = word;
 };
 
@@ -85,19 +87,19 @@ MapSum.prototype.getResult = function (prefix) {
             return;
         }
         var i = 0;
-        while (true) {
+        while (i <= res.length) {
             if (!res[i]) {
-                res[i] = node;
+                res.push(node);
                 break;
             } else if (node.weight < res[i].weight) {
                 i++;
             } else if (node.weight === res[i].weight) {
-                var map = {
-                    [node.word]: node,
-                    [res[i].word]: res[i]
+                if (node.word < res[i].word) {
+                    res.splice(i, 0, node);
+                    break;
+                } else {
+                    i++;
                 }
-                res.splice(i, 1, ...[node.word, res[i].word].sort().map(k=>map[k]));
-                break;
             } else {
                 res.splice(i, 0, node);
                 break;
@@ -106,6 +108,7 @@ MapSum.prototype.getResult = function (prefix) {
         if (res.length > 3) {
             res.length = 3;
         }
+        // console.log(res);
     }
 
     var addTraversal = function (root) {
@@ -119,7 +122,7 @@ MapSum.prototype.getResult = function (prefix) {
     }
     addTraversal(root);
     // console.log(res);
-    return res.map(node=>node.word);
+    return res.map(node => node.word);
 };
 
 MapSum.prototype.getIndex = function (word) {
@@ -142,7 +145,7 @@ var Node = function () {
 }
 
 var a = ["i love you", "island", "iroman", "i love leetcode"],
-    b = [5,3,2,2];
+    b = [5, 3, 2, 2];
 
 
 var a = new AutocompleteSystem(a, b);
