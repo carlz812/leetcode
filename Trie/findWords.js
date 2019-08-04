@@ -57,7 +57,6 @@ var findWords = function (board, words) {
             })
         }
     }
-
     return res;
 };
 
@@ -90,7 +89,6 @@ Trie.prototype.insert = function (key) {
  * @return {number}
  */
 Trie.prototype.search = function (word) {
-    // console.log(word);
     var root = this.root;
     var w = word.split('');
     while (w.length) {
@@ -141,13 +139,15 @@ var Node = function () {
 
 
 
-var words = ["oath", "pea", "eat", "rain"],
-    board = [
-        ['o', 'a', 'a', 'n'],
-        ['e', 't', 'a', 'e'],
-        ['i', 'h', 'k', 'r'],
-        ['i', 'f', 'l', 'v']
-    ];
+// var words = ["oath", "pea", "eat", "rain"],
+//     board = [
+//         ['o', 'a', 'a', 'n'],
+//         ['e', 't', 'a', 'e'],
+//         ['i', 'h', 'k', 'r'],
+//         ['i', 'f', 'l', 'v']
+//     ];
 
+var board = [["a", "b"], ["a", "a"]],
+    words = ["aba", "baa", "bab", "aaab", "aaa", "aaaa", "aaba"];
 var res = findWords(board, words);
 console.log(res);
