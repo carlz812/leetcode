@@ -37,44 +37,24 @@ var findWords = function (board, words) {
             n = curr[1],
             prev = curr[2];
 
-        var circleChance = false;
-        DIRECTIONS.forEach(dir => {
-            let mm = m + dir[0],
-                nn = n + dir[1];
-
-            if (mm < 0 || nn < 0 || mm >= M || nn >= N || board[mm][nn] === null) {
-                return;
-            }
-
-            // var prev = board[m][n];
-            // var now = board[mm][nn];
-            let word = prev.map(pos => board[pos[0]][pos[1]]).join('');
-            word = word + board[mm][nn];
-            // console.log(prev);
-            // console.log(dir);
-            console.log(word);
-            console.log(mm, nn, board[mm][nn]);
-
-            if (trie.startsWith(word)) {
-                // console.log('word');
-                // console.log(word);
-                if (trie.search(word)) {
-                    console.log('search')
-                    console.log(word)
-                    prev.forEach(pos => {
-                        res.push(word);
-                        board[pos[0]][pos[1]] = null;
-                    })
-                } else {
-                    prev.push([mm, nn])
-                    queue.push([mm, nn, prev]);
+        var word = prev.map(pos => board[pos[0]][pos[1]]).join('');
+        if (trie.startsWith(word)) {
+            if (trie.search(word)) {
+                if (res.indexOf(word) === -1) {
+                    res.push(word);
                 }
-                circleChance = true;
             }
-        })
+            DIRECTIONS.forEach(dir => {
+                var mm = m + dir[0],
+                    nn = n + dir[1];
 
-        if (!circleChance) {
-            // prev[m][n] = null;
+                if (mm < 0 || nn < 0 || mm >= M || nn >= N || board[mm][nn] === null) {
+                    return;
+                }
+                if (!prev.some(pos => (pos[0] === mm && (pos[1] === nn)))) {
+                    queue.push([mm, nn, [...prev, [mm, nn]]]);
+                }
+            })
         }
     }
 
@@ -110,10 +90,11 @@ Trie.prototype.insert = function (key) {
  * @return {number}
  */
 Trie.prototype.search = function (word) {
+    // console.log(word);
     var root = this.root;
     var w = word.split('');
     while (w.length) {
-        var curr = w.shift();
+        var curr = this.getIndex(w.shift());
         if (root.children[curr]) {
             root = root.children[curr];
         } else {
@@ -161,13 +142,12 @@ var Node = function () {
 
 
 var words = ["oath", "pea", "eat", "rain"],
-    board =
-        [
-            ['o', 'a', 'a', 'n'],
-            ['e', 't', 'a', 'e'],
-            ['i', 'h', 'k', 'r'],
-            ['i', 'f', 'l', 'v']
-        ];
+    board = [
+        ['o', 'a', 'a', 'n'],
+        ['e', 't', 'a', 'e'],
+        ['i', 'h', 'k', 'r'],
+        ['i', 'f', 'l', 'v']
+    ];
 
 var res = findWords(board, words);
 console.log(res);
