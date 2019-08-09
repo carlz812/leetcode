@@ -40,8 +40,7 @@ Trie.prototype.insert = function (word, index) {
     const queue = word.split('');
     let root = this.root;
     while (queue.length) {
-        const cur = queue.shift();
-        const key = this.getIndex(cur);
+        const key = this.getIndex(queue.shift());
         if (!root.children[key]) {
             root.children[key] = new Node();
         }
@@ -78,9 +77,6 @@ Trie.prototype.startWith = function (prefix, index) {
         }
         root = root.children[key];
     }
-    // if (root.word === prefix && root.index !== index) {
-    //     res.push(root)
-    // }
     res.push(...this.getAllChild(root, prefix, index))
     return res;
 }
