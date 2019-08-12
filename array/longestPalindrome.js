@@ -9,7 +9,10 @@ var longestPalindrome = function (s) {
         var j = 1;
         while (j < i) {
             if (manachered[i - j] === manachered[i + j]) {
-                if (len < j) len = j, middle = i;
+                if (len < j) {
+                    len = j;
+                    middle = i;
+                }
                 j++;
             } else {
                 break;
@@ -21,6 +24,6 @@ var longestPalindrome = function (s) {
     return longestString.replace(/[\$\#]/g, '')
 };
 
-var res = longestPalindrome('cbbd');
+var res = longestPalindrome('andna');
 
 console.log(res);
