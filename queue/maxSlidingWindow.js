@@ -14,8 +14,6 @@ var maxSlidingWindow = function (nums, k) {
     }
     for (var j = k; j < nums.length; j++) {
         sliding.add(nums[j]);
-        console.log(sliding.store);
-        console.log(sliding.max);
         res.push(sliding.max);
     }
     return res;
