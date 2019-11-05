@@ -103,7 +103,3 @@ var intToRoman = function (num) {
     });
     return  res.reverse().join('');
 };
-// @lc code=end
-var res = intToRoman(3);
-
-console.log(res);
