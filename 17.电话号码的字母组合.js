@@ -36,9 +36,12 @@
  * @return {string[]}
  */
 var letterCombinations = function(digits) {
-    
     var phone = {};
     var output = [];
+
+    if (digits.length === 0) {
+        return output;
+    }
 
     [
         ,
@@ -56,30 +59,25 @@ var letterCombinations = function(digits) {
             phone[`${index}`] = string;
         }
     })
+    
+    function backtrack(combination, next_digits) {
+        // if there are still digits to check
+        if(next_digits.length!==0){
+            var digit = next_digits.substring(0, 1);
 
-    if (digits.length != 0) {
-        backtrack("", digits);
-    }
-    function backtrack(combination , next_digits) {
-        // if there is no more digits to check
-        if (next_digits === '') {
-            // the combination is done
+            var letters = phone[digit];
+
+            for(var i = 0;i<letters.length;i++){
+                var letter = letters[i];
+                backtrack(combination+letter, next_digits.substring(1));
+            }
+
+        } else {
             output.push(combination);
         }
-        // if there are still digits to check
-        else {
-            // iterate over all letters which map 
-            // the next available digit
-            var digit = next_digits.substring(0, 1);
-            var letters = phone[digit];
-            for (var i = 0; i < letters.length; i++) {
-                var letter = letters[i];
-                // append the current letter to the combination
-                // and proceed to the next digits
-                backtrack(combination + letter, next_digits.substring(1));
-            }
-        }
+
     }
+    backtrack("", digits);
     return output;
 };
 // @lc code=end
